@@ -13,10 +13,18 @@ set(CPACK_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSIO
 include(CPack)
 
 find_package(Boost REQUIRED COMPONENTS
+	program_options
 	system
 	thread)
 
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
+
+set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+find_package(Threads)
+
+if(CMAKE_USE_PTHREADS_INIT)
+	set(CMAKE_THREAD_LIBS_INIT "pthread")
+endif()
 
 add_subdirectory(src)
