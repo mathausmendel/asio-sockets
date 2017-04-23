@@ -35,8 +35,14 @@ int main(int argc, char** argv)
 				if(!error)
 				{
 					char buffer[1024] = { 0 };
-					socket->read_some(boost::asio::buffer(buffer));
-					std::cout << "Socket connected. Data: " << buffer << std::endl;
+					error.clear();
+
+					socket->read_some(boost::asio::buffer(buffer), error);
+
+					if(!error)
+					{
+						std::cout << "Socket connected. Data: " << buffer << std::endl;
+					}
 				}
 			});
 	};
